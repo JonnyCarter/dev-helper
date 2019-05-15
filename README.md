@@ -2,49 +2,67 @@
 
 ## Command line Helpers
 
+### Moving around
 You move between folders with the `cd` command
 
 `cd /folder/`
 We will call folders directories or directory (dir) for short.
-You will fin yourself remembering long old routes to places on a server
+You will find yourself remembering long old routes to places on a server
 
-`cd /var/www/html/`
-`cd /var/log/apache2`
+- `cd /var/www/html/`
+- `cd /var/log/apache2`
 
 Here are some handy shortcuts:
-`cd ~/` Go to you logged in users home directory
-`cd /` Go to the root computer/server directory
-`cd -` Go to the last directory you were in
-`cd ../` Go back a directory
-`cd ../../` Go back two directories (and so on)
-`cd .` leaves you where you are
+- `cd ~/` Go to you logged in users home directory
+- `cd /` Go to the root computer/server directory
+- `cd -` Go to the last directory you were in
+- `cd ../` Go back a directory
+- `cd ../../` Go back two directories (and so on)
+- `cd .` leaves you where you are
 
-As a practical example depending on the server you will often need to find the location of error logs - depending on which web software the site is on there are different locations to look
-`cd  /var/logs/apache2` will put you in the apache server error log default directory
-`cd  /var/log/nginx` will put you in the nigix server error log default directory
+As a practical example depending on the server you may often need to find the location of error logs - depending on which web software the site is on there are different locations to look
+- `cd  /var/logs/apache2` will put you in the apache server error log default directory
+- `cd  /var/log/nginx` will put you in the nigix server error log default directory
+
+### Viewing and Editing Files
 
 Now that you have found the folder you will need to read the file
 `cat filename` will print the files contents onto the terminal - this can dump alot of information if its a big file
 You can also open the file in a text editor if you prefer
 
-`nano filename` example `nano error.log`
+`nano filename` or `nano error.log`
 `ctrl x` and type `y` will save your changes
 `ctrl c` will exit out of the file without saving your changes
 
 Most terminals will have multiple text editors you can use - `nano` `vim` are common and popular.
+> `Vim/Vi` is a bit different to other editors
+
+### Suspend and re-open
+`ctrl z` will suspend the current program - handy for a text editor you want to check something but dont want to save the file
+Once your done running `fg` or foreground command will put you back into the file.
+
+### Handy Logging
 
 If you are faced with a very large log file sometimes it helps to check the last few lines of the file
 `tail -f error.log` Is a really handy command that will open the error log file and print to the screen whatever gets appended to it.
+
 This can be useful on a site that is broken broken as it can often store useful debug information. You can reload the broken page and see the logs realtime.
 You can also dump the specified number of lines if you just want to see for example the last 100 lines.
+
 `tail -100 error.log`
 
 For the record  - theres also the opposite command `head` to see the top few lines of a file. (if you ever need it)
 
+### Appending and Amending Files
+
 Sometimes you can work with files that can be giant - gb's of size. Tail is great for the last few bits what can also be helpful is sending data from one command to another
 `tail -100 error.log   > last100lines.log`
 This would write the results of your tail command into a new file overwriting the file 
-`tail -100 error.log   >> last100lines.log` this would ammend the file at the bottom
+
+`tail -100 error.log   >> last100lines.log` 
+This would ammend the file at the bottom
+
+### History help
 
 Sometimes you need to find a command you ran previously because your memory isnt all it used to be - it happens no one is perfect.
 The `history` command will display all commands previously run on your system by your user.
@@ -61,6 +79,8 @@ As an example -
  9740  git remote set-url  origin git@github.com:dividohq/finance-plugin-woocommerce.git
  9741  git status
 ```
+### Grep for quick searching
+
 If you dont have a fancy IDE for your coding sometimes you will need to find a bunch of random stuff in a folder.
 `grep` can help you here too
 
@@ -68,7 +88,8 @@ If you dont have a fancy IDE for your coding sometimes you will need to find a b
 This command will recursively search for files with `woocommerce_product_write_panel_tabs` in in the `../demo_divido_co/` folder.
 It will dump out all files with that string in - which can help.
 
-## A note on permissions
+### A note on permissions
+
 Who you are on the server matters - if you are logged in as root you are going to endup running a command and breaking a websites permissions
 Especially if you are running some magento commands - you can recursively reset the file owner like so:
 `chown -R www-data:www-data ../m2dev`
@@ -101,11 +122,13 @@ mysql>```
 
 Once you have a mysql shell  you can exit it
 `mysql> exit;`
+
 Some basic example commands:
 `mysql> SELECT * FROM table LIMIT 5`
 `mysql> UPDATE wp_options SET value='this' WHERE id='that' `
 
 
+### Logging in automatically without `-p`
 create a empty file `touch ~/.mylogin.cnf`
 ```
 [client]
@@ -115,6 +138,7 @@ password = super-secure-password
 Make sure you restrict access to this file!
 `chmod 600 /home/example_user/.mylogin.cnf`
 
+### BACKUP and RESTORE
 
 ### Make a full backup of all DB's
 `mysqldump --all-databases --single-transaction --quick --lock-tables=false > full-backup-$(date +%F).sql -u root -p`
@@ -127,7 +151,7 @@ Make sure you restrict access to this file!
 `crontab -e`
 `0 1 * * * /usr/bin/mysqldump --defaults-extra-file=/home/example_user/.my.cnf -u root --single-transaction --quick --lock-tables=false --all-databases > full-backup-$(date +\%F).sql`
 
-Restore from our backup
+## Restore from our backup
 `mysql -u root -p < full-backup.sql`
 
 
