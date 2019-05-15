@@ -130,15 +130,17 @@ Some basic example commands:
 
 ### Logging in automatically without `-p`
 create a empty file `touch ~/.mylogin.cnf`
-```
-[client]
+
+```[client]
 user = root
 password = super-secure-password
 ```
+
 Make sure you restrict access to this file!
 `chmod 600 /home/example_user/.mylogin.cnf`
 
 ### BACKUP and RESTORE
+
 
 ### Make a full backup of all DB's
 `mysqldump --all-databases --single-transaction --quick --lock-tables=false > full-backup-$(date +%F).sql -u root -p`
