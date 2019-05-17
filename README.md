@@ -24,9 +24,11 @@ As a practical example depending on the server you may often need to find the lo
 - `cd  /var/logs/apache2` will put you in the apache server error log default directory
 - `cd  /var/log/nginx` will put you in the nigix server error log default directory
 
+## Searching Folders
 Moving around is one thing but you still need to  see whats in the folders
 
-`ls` The `ls` command lists all files in a directory
+The `ls` command lists all files in a directory
+
 ```
 ls
 3         README.md one       two
@@ -39,8 +41,11 @@ ls -a
 .         ..        .git      .hidden   3         README.md one       two
 ```
 
-You can end up with a quick display but to see the permissions of files and organise them in a list is really helpful
+You can end up with a quick display to help you find your way but sometimes you need more. 
+To see the permissions of files and organise them in a list is really helpful
+
 `ls -l` List of files with additional informaiton
+
 ```
 ls -l
 total 16
@@ -52,7 +57,7 @@ total 16
 
 `ls -lh` List of files with their size in human readable form
 
-Notice the order  - ``permissions` `user` `user-group` `filesize` `date modified` `name`
+A small breakdown of each part  `permissions` `user` `user-group` `filesize` `date modified` `name`
 ```
  ls -lh
 total 16
@@ -62,7 +67,8 @@ total 16
 -rw-r--r--  1 jonathan.carter  staff     0B 17 May 10:10 two
 ```
 
-Really this is the most common one i find myself using - combines all together
+This is the most common one I find myself using - combining all together
+
 `ls -lah`
 
 ```
@@ -78,25 +84,59 @@ drwxr-xr-x  12 jonathan.carter  staff   384B 17 May 10:14 .git
 ```
 
 ### RTFM
-As you go through you will hit many differt commands and they will have multiple options - the only way for you to know the full extent of these is to read the manual.
-These general open in vim so to exit type `:q`
+As you go through you will hit many different commands and they will have multiple options - the only way for you to know the full extent of these is to read the manual.
+These generally open in vim so to exit type `:q`
 `man ls`
 `man cd`
 `man man`
 You can find alot of helpful information in these - if your command doesnt have one google it and see what you can find.
 
+Often a command will also have a `-h` or `--help` command that will list its uses.
+
+```
+man --help
+man, version 1.6c
+
+usage: man [-adfhktwW] [section] [-M path] [-P pager] [-S list]
+    [-m system] [-p string] name ...
+
+  a : find all matching entries
+  c : do not use cat file
+  d : print gobs of debugging information
+  D : as for -d, but also display the pages
+  f : same as whatis(1)
+  h : print this help message
+  k : same as apropos(1)
+  K : search for a string in all pages
+  t : use troff to format pages for printing
+  w : print location of man page(s) that would be displayed
+      (if no name given: print directories that would be searched)
+  W : as for -w, but display filenames only
+
+  C file   : use `file' as configuration file
+  M path   : set search path for manual pages to `path'
+  P pager  : use program `pager' to display pages
+  S list   : colon separated section list
+  m system : search for alternate system's man pages
+  p string : string tells which preprocessors to run
+               e - [n]eqn(1)   p - pic(1)    t - tbl(1)
+               g - grap(1)     r - refer(1)  v - vgrind(1)
+```
+
 ### Viewing and Editing Files
 
 Now that you have found the folder you will need to read the file
-`cat filename` will print the files contents onto the terminal - this can dump alot of information if its a big file
+
+`cat filename` 
+Prints the files contents onto the terminal - this can dump alot of information if its a big file.
 You can also open the file in a text editor if you prefer
 
-`nano filename` or `nano error.log`
-`ctrl x` and type `y` will save your changes
-`ctrl c` will exit out of the file without saving your changes
+`nano filename` or `nano error.log` will open the file in a command line text editor nano.
+To exit `ctrl x` and type `y` will save your changes
+`ctrl c` will exit out of the file without saving your changes - this is also a pretty useful way to back out of a program in the cli.
 
 Most terminals will have multiple text editors you can use - `nano` `vim` are common and popular.
-> `Vim/Vi` is a bit different to other editors
+> `Vim/Vi` is a bit different to other editors to exit you have to type `:q`
 
 ### Suspend and re-open
 `ctrl z` will suspend the current program - handy for a text editor you want to check something but dont want to save the file
@@ -104,8 +144,11 @@ Once your done running `fg` or foreground command will put you back into the fil
 
 ### Handy Logging
 
-If you are faced with a very large log file sometimes it helps to check the last few lines of the file
-`tail -f error.log` Is a really handy command that will open the error log file and print to the screen whatever gets appended to it.
+If you are faced with a very large log file sometimes it helps to check the last few lines of the file.
+
+`tail -f error.log` 
+
+Is a really handy command that will open the error log file and print to the screen whatever gets appended to it.
 
 This can be useful on a site that is broken broken as it can often store useful debug information. You can reload the broken page and see the logs realtime.
 You can also dump the specified number of lines if you just want to see for example the last 100 lines.
@@ -117,22 +160,28 @@ For the record  - theres also the opposite command `head` to see the top few lin
 ### Appending and Amending Files
 
 Sometimes you can work with files that can be giant - gb's of size. Tail is great for the last few bits what can also be helpful is sending data from one command to another
+
 `tail -100 error.log   > last100lines.log`
+
 This would write the results of your tail command into a new file overwriting the file 
 
 `tail -100 error.log   >> last100lines.log` 
+
 This would ammend the file at the bottom
 
 ### History help
 
 Sometimes you need to find a command you ran previously because your memory isnt all it used to be - it happens no one is perfect.
 The `history` command will display all commands previously run on your system by your user.
-As this dumps all its only useful if it was in the last few commands.
+
 A really helpful trick is to press the `up` arrow on your keyboard, as this will loop through the last commands.
 If you remember doing a command in the mists of time and kind of remember some of it you can pass the command into another helpful function `grep`
 
+
 `history | grep searchterm`
+
 As an example - 
+
 `history | grep git` normally tells me what the damn command was I ran to reset my git branch to a new org
 
 ```
@@ -153,11 +202,16 @@ It will dump out all files with that string in - which can help.
 
 Who you are on the server matters - if you are logged in as root you are going to endup running a command and breaking a websites permissions
 Especially if you are running some magento commands - you can recursively reset the file owner like so:
+
 `chown -R www-data:www-data ../m2dev`
+
 This command changes the owner of files in the m2dev dir to be owned by the default apache web user `www-data`.
-`chmod 777 file` if you are getting weird permissions this means everyone can do anything to it.
+
+`chmod 777 file` 
+
+If you are getting weird permissions this means everyone can do anything to it.
 You wouldnt leave your car open, with the keys in,engine running, with your pin number taped to you credit card and id docs in a high crime area so dont leave your files lucky 7 on a server.
-If you turn your files into a slut to fix an issue always put them back when your done.
+If you turn your files lucky to fix an issue always put them back when your done.
 
 
 ## Mysql Helpers
@@ -179,7 +233,8 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql>```
+mysql>
+```
 
 Once you have a mysql shell  you can exit it
 `mysql> exit;`
