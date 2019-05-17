@@ -24,6 +24,67 @@ As a practical example depending on the server you may often need to find the lo
 - `cd  /var/logs/apache2` will put you in the apache server error log default directory
 - `cd  /var/log/nginx` will put you in the nigix server error log default directory
 
+Moving around is one thing but you still need to  see whats in the folders
+
+`ls` The `ls` command lists all files in a directory
+```
+ls
+3         README.md one       two
+```
+
+`ls -a` List all files even hidden dot files 
+
+```
+ls -a
+.         ..        .git      .hidden   3         README.md one       two
+```
+
+You can end up with a quick display but to see the permissions of files and organise them in a list is really helpful
+`ls -l` List of files with additional informaiton
+```
+ls -l
+total 16
+-rw-r--r--  1 jonathan.carter  staff     0 17 May 10:10 3
+-rw-r--r--  1 jonathan.carter  staff  6784 15 May 16:22 README.md
+-rw-r--r--  1 jonathan.carter  staff     0 17 May 10:10 one
+-rw-r--r--  1 jonathan.carter  staff     0 17 May 10:10 two
+```
+
+`ls -lh` List of files with their size in human readable form
+
+Notice the order  - ``permissions` `user` `user-group` `filesize` `date modified` `name`
+```
+ ls -lh
+total 16
+-rw-r--r--  1 jonathan.carter  staff     0B 17 May 10:10 3
+-rw-r--r--  1 jonathan.carter  staff   6.6K 15 May 16:22 README.md
+-rw-r--r--  1 jonathan.carter  staff     0B 17 May 10:10 one
+-rw-r--r--  1 jonathan.carter  staff     0B 17 May 10:10 two
+```
+
+Really this is the most common one i find myself using - combines all together
+`ls -lah`
+
+```
+total 16
+drwxr-xr-x   8 jonathan.carter  staff   256B 17 May 10:10 .
+drwxr-xr-x  27 jonathan.carter  staff   864B 15 May 16:09 ..
+drwxr-xr-x  12 jonathan.carter  staff   384B 17 May 10:14 .git
+-rw-r--r--   1 jonathan.carter  staff     0B 17 May 10:10 .hidden
+-rw-r--r--   1 jonathan.carter  staff     0B 17 May 10:10 3
+-rw-r--r--   1 jonathan.carter  staff   7.8K 17 May 10:14 README.md
+-rw-r--r--   1 jonathan.carter  staff     0B 17 May 10:10 one
+-rw-r--r--   1 jonathan.carter  staff     0B 17 May 10:10 two
+```
+
+### RTFM
+As you go through you will hit many differt commands and they will have multiple options - the only way for you to know the full extent of these is to read the manual.
+These general open in vim so to exit type `:q`
+`man ls`
+`man cd`
+`man man`
+You can find alot of helpful information in these - if your command doesnt have one google it and see what you can find.
+
 ### Viewing and Editing Files
 
 Now that you have found the folder you will need to read the file
