@@ -272,5 +272,6 @@ Make sure you restrict access to this file!
 ## Restore from our backup
 `mysql -u root -p < full-backup.sql`
 
+# Test
 
 
